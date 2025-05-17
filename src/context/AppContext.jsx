@@ -1,17 +1,17 @@
 /* eslint-disable no-unused-vars */
-import { promises } from 'dns';
-import { resolve } from 'path';
+
 import { createContext, useContext, useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 
-export const AppContext = createContext();
+const AppContext = createContext();
 
 export function AppProvider({ children }) {
   // State for articles data
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [activeAccount, setActiveAccount] = useState('amazon.com');
+  const [activeAccount, setActiveAccount] = useState('amazon.com'); // Default account set
   const [error, setError] = useState(null);
+
   // Load articles from local storage or use default data
   const loadArticles = async () => {
     setIsLoading(true);
@@ -26,7 +26,7 @@ export function AppProvider({ children }) {
         setArticles(JSON.parse(storedArticles));
       } else {
         // Use default data
-        const module = import.meta.globEager('../data/articles-data.js');
+        const module = await import('../data/articles-data.js');
         const articlesWithTimestamps = module.articlesData.map((article) => ({
           ...article,
           createdOn: new Date().toISOString(),
@@ -49,76 +49,88 @@ export function AppProvider({ children }) {
     loadArticles();
   }, []);
 
-    const addArticle = (article) =>{
-      try {
-    if (!article.title || !article.content) {
-        throw new Error("Title and content are required")
+  const addArticle = (article) => {
+    try {
+      if (!article.title || !article.content) {
+        throw new Error("Title and content are required");
       }
       const newArticle = {
-          id: Date.now(), // More reliable ID
+        id: Date.now(), // More reliable ID
         ...article,
         createdOn: new Date().toISOString(),
-      }
-      const updatedArticles = [...articles, newArticle]
-      setArticles(updatedArticles)
-      localStorage.setItem('articles', JSON.stringify(updatedArticles))
-      toast.success("Article created successfully!")
-      } catch (error) {
-toast.error(error.message)
-      throw error
-      }
+      };
+      const updatedArticles = [...articles, newArticle];
+      setArticles(updatedArticles);
+      localStorage.setItem('articles', JSON.stringify(updatedArticles));
+      toast.success("Article created successfully!");
+      return newArticle;
+    } catch (error) {
+      toast.error(error.message);
+      throw error;
     }
+  };
+
   const deleteArticle = (id) => {
     try {
-      const updatedArticles = articles.filter(article => article.id !== id)
-      setArticles(updatedArticles)
-      localStorage.setItem("articles", JSON.stringify(updatedArticles))
-      toast.success("Article deleted successfully!")
+      const updatedArticles = articles.filter(article => article.id !== id);
+      setArticles(updatedArticles);
+      localStorage.setItem("articles", JSON.stringify(updatedArticles));
+      toast.success("Article deleted successfully!");
     } catch (err) {
-      toast.error("Failed to delete article")
+      toast.error("Failed to delete article");
     }
-  }
+  };
+
   const updateArticle = (id, updatedData) => {
     try {
-           if (!updatedData.title || !updatedData.content) {
-        throw new Error("Title and content are required")
+      if (!updatedData.title || !updatedData.content) {
+        throw new Error("Title and content are required");
       }
-       const updatedArticles = articles.map(article =>
+      const updatedArticles = articles.map(article =>
         article.id === id ? {
           ...article,
           ...updatedData,
           updatedOn: new Date().toISOString()
         } : article
-      )
-
-      setArticles(updatedArticles)
-      localStorage.setItem("articles", JSON.stringify(updatedArticles))
-      toast.success("Article updated successfully!")
+      );
       setArticles(updatedArticles);
       localStorage.setItem("articles", JSON.stringify(updatedArticles));
       toast.success("Article updated successfully!");
-
     } catch (error) {
-toast.error(error.message)
-      throw error
+      toast.error(error.message);
+      throw error;
     }
-  }
+  };
 
+  const switchAccount = (account) => {
+    setActiveAccount(account);
+    toast.success(`Switched to ${account}`);
+    // You might want to persist the active account in localStorage
+    localStorage.setItem('activeAccount', account);
+  };
 
-    const switchAccount = (account) => {
-    setActiveAccount(account)
-    toast.success(`Switched to ${account}`)
-  }
+  // Load active account from localStorage on initial render
+  useEffect(() => {
+    const savedAccount = localStorage.getItem('activeAccount');
+    if (savedAccount) {
+      setActiveAccount(savedAccount);
+    }
+  }, []);
 
   const value = {
-    addArticle,
-    deleteArticle,
-    updateArticle,
     articles,
     isLoading,
     error,
     activeAccount,
+    addArticle,
+    deleteArticle,
+    updateArticle,
     switchAccount
-  }
-  return <AppContext.Provider value={{value}}>{children}</AppContext.Provider>;
+  };
+
+  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
+
+
+
+export default AppContext;
