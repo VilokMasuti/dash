@@ -2,12 +2,14 @@ import { useState } from "react"
 import { Button } from "../ui/button"
 import { useAppContext } from "../../hooks/useAppContext.js"
 import toast from "react-hot-toast"
-const ArticleBulkActions =({ selectedArticles, onClearSelection })=> {
-   const { deleteArticle } = useAppContext()
+
+
+export default function ArticleBulkActions({ selectedArticles, onClearSelection }) {
+  const { deleteArticle } = useAppContext()
   const [isDeleting, setIsDeleting] = useState(false)
 
   const handleBulkDelete = async () => {
-     if (selectedArticles.length === 0) {
+    if (selectedArticles.length === 0) {
       toast.error("No articles selected")
       return
     }
@@ -37,6 +39,7 @@ const ArticleBulkActions =({ selectedArticles, onClearSelection })=> {
   if (selectedArticles.length === 0) {
     return null
   }
+
   return (
     <div className="flex items-center gap-2 mr-4">
       <span className="text-sm text-gray-500">
@@ -54,4 +57,3 @@ const ArticleBulkActions =({ selectedArticles, onClearSelection })=> {
     </div>
   )
 }
-export default ArticleBulkActions;

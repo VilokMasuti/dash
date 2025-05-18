@@ -11,8 +11,8 @@ import { Checkbox } from "../ui/checkbox"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 import { useAppContext } from "../../hooks/useAppContext.js"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu"
-import { ArticlesTableSkeleton } from "./ArticlesTableSkeleton"
-import { ArticleBulkActions } from "./ArticleBulkActions"
+import  ArticlesTableSkeleton  from "./ArticlesTableSkeleton.jsx"
+import  ArticleBulkActions  from "./ArticleBulkActions"
 
 export default  function ArticlesTable({ category = "generated", limit, onDeleteArticle }) {
   const navigate = useNavigate()

@@ -256,7 +256,7 @@ function SideBar() {
           </div>
 
           {/* Other Navigation Items */}
-          <Link to="/auto-blog">
+          <Link to="/">
             <Button
               variant="ghost"
               className={cn(
@@ -269,7 +269,7 @@ function SideBar() {
             </Button>
           </Link>
 
-          <Link to="/internal-links">
+          <Link to="">
             <Button
               variant="ghost"
               className={cn(
@@ -282,7 +282,7 @@ function SideBar() {
             </Button>
           </Link>
 
-          <Link to="/free-backlinks">
+          <Link to="">
             <Button
               variant="ghost"
               className={cn(
@@ -295,7 +295,7 @@ function SideBar() {
             </Button>
           </Link>
 
-          <Link to="/integrations">
+          <Link to="/">
             <Button
               variant="ghost"
               className={cn(
@@ -325,7 +325,7 @@ function SideBar() {
             </Button>
           </Link>
 
-          <Link to="/affiliate">
+          <Link to="/">
             <Button
               variant="ghost"
               className={cn(
@@ -338,7 +338,7 @@ function SideBar() {
             </Button>
           </Link>
 
-          <Link to="/updates">
+          <Link to="/">
             <Button
               variant="ghost"
               className={cn(
@@ -351,7 +351,7 @@ function SideBar() {
             </Button>
           </Link>
 
-          <Link to="/help">
+          <Link to="">
             <Button
               variant="ghost"
               className={cn(
@@ -364,7 +364,7 @@ function SideBar() {
             </Button>
           </Link>
 
-          <Link to="/chat">
+          <Link to="/">
             <Button
               variant="ghost"
               className={cn(

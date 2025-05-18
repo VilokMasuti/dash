@@ -1,7 +1,7 @@
 import { Skeleton } from "../ui/skeleton"
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card"
 
-export default  function ArticleFormSkeleton() {
+export default function ArticleFormSkeleton() {
   return (
     <div className="p-6">
       <div className="flex items-center mb-6">

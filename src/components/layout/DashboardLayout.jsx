@@ -60,7 +60,7 @@ export default function DashboardLayout({ children }) {
                   >
                     <Avatar className="h-8 w-8">
                       <AvatarImage src="/placeholder.svg" alt="User" />
-                      <AvatarFallback>JD</AvatarFallback>
+                      <AvatarFallback>VILOK</AvatarFallback>
                     </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
